@@ -13,7 +13,7 @@ program test_interface_c
   double precision :: val_double
 
   integer, parameter :: nvals=10
-  integer :: i
+  integer :: i, rst
   integer(kind=1), dimension(:), allocatable :: array_int1
 
   val_int1 = 17
@@ -64,5 +64,17 @@ program test_interface_c
 
   write(*,*)
   call send_C_array_int1(array_int1, nvals)
+
+  write(*,*)
+  write(*,*) "> [test_interface_c] Get sum of array elements from C ... "
+
+  write(*,'(8x,a,$)') "> [Fortran Side] :"
+  do i=1, nvals
+    array_int1(i) = int(i,1)
+    write(*,'(x,i2,$)') array_int1(i)
+  enddo
+
+  write(*,*)
+  ! rst = compute_sum_c(array_int1, nvals)
 
 end program test_interface_c

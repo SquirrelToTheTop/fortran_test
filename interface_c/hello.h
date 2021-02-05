@@ -19,6 +19,10 @@ void print_float(const float *);
 // affiche la valeur double
 void print_double(const double *);
 
+// affiche le contenu d'un tableau 1D
 void print_array_int1(signed char *, const int);
+
+// compute the sum of array element return it
+int compute_sum(signed char *, const int);
 
 #endif
