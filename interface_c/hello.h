@@ -25,4 +25,7 @@ void print_array_int1(signed char *, const int);
 // compute the sum of array element return it
 int compute_sum(signed char *, const int);
 
+// return and array to Fortran
+int * create_1D_array(const int);
+
 #endif

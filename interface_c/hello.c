@@ -62,7 +62,7 @@ void print_array_int1(signed char *arr, const int arr_size ){
 }
 
 // ---------------------------------------------------------------------
-// Operation on 1D array -----------------------------------------------
+// Operation on 1D array and return value ------------------------------
 // --------------------------------------------------------------------- 
 int compute_sum(signed char *arr, const int arr_size){
   
@@ -73,4 +73,23 @@ int compute_sum(signed char *arr, const int arr_size){
   }
 
   return sum;
+}
+
+// ---------------------------------------------------------------------
+// Return 1D array to Fortran ------------------------------------------
+// ---------------------------------------------------------------------
+int * create_1D_array(const int nelems){
+
+  int *arr = (int *) malloc(sizeof(int)*nelems);
+
+  for(int i=0; i<nelems; ++i){
+    arr[i] = i*2;
+  }
+
+  return arr;
+}
+
+// free allocated memory on C side
+void free_1D_array(int *p){
+  free(p);
 }

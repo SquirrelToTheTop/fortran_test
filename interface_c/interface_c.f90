@@ -7,15 +7,16 @@
 
 module interface_c
 
-  use iso_c_binding
+  ! use iso_c_binding
 
   ! public :: printBits2, test_compression
   ! contains
 
   interface
 
-  ! just call C routine 
-  
+  ! ---------------------------------------------------------------------
+  ! Just call a C function, no return, no args --------------------------
+  ! ---------------------------------------------------------------------
   subroutine helloworld() bind(C, name="bonjour_from_c")
     use iso_c_binding
     implicit none 
@@ -67,7 +68,6 @@ module interface_c
     use iso_c_binding
     real(c_double), intent(in) :: val
   end subroutine send_C_double
-   
 
   ! ---------------------------------------------------------------------
   ! Send 1D array to C function -----------------------------------------
@@ -85,15 +85,25 @@ module interface_c
   ! ---------------------------------------------------------------------
 
   ! interface to send pointor to array of integer (kind=1) + array size (copy)
-  
-    ! function compute_sum_c(arr_int1, nval) bind(C, name="compute_sum")
-    !   use iso_c_binding
-    !   integer(c_int), intent(in), value :: nval
-    !   integer(C_INT8_T), dimension(*), intent(in) :: arr_int1
-    !   integer(c_int), intent(out) :: compute_sum_c
-    ! end function compute_sum_c
+  integer(c_int) function compute_sum_c(arr_int1, nval) bind(C, name="compute_sum")
+    use iso_c_binding
+    integer(c_int), intent(in), value :: nval
+    integer(C_INT8_T), dimension(*), intent(in) :: arr_int1
+  end function compute_sum_c
+
+  ! ---------------------------------------------------------------------
+  ! Get pointor to 1D array allocated in C ------------------------------
+  ! ---------------------------------------------------------------------
+  type(c_ptr) function create_array_c(nval) bind(C, name="create_1D_array")
+    use iso_c_binding
+    integer(c_int), intent(in), value :: nval
+  end function create_array_c
+
+  subroutine free_c_1d_array(parray) bind(C, name="free_1D_array")
+    use iso_c_binding
+    type(c_ptr), intent(in), value :: parray
+  end subroutine free_c_1d_array
 
   end interface
-  
 
 end module interface_c
